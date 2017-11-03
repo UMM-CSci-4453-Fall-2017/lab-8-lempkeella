@@ -27,7 +27,7 @@ app.get("/click",function(req,res){
   connection.query(sql,(function(res){return function(err,rows,fields){
      if(err){console.log("We have an insertion error:");
              console.log(err);}
-     res.send(err); // Let the upstream guy know how it went
+     res.send(err); // Let upstream know how it went
   }})(res));
 });
 // Your other API handlers go here!

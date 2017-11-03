@@ -38,14 +38,15 @@ app.get("/click",function(req,res){
 app.get("/transaction" , function(req,res) {
   connection.query("select itemId,count(itemId) as count,price, item from "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
 			" where prices.id=itemId AND itemId=inventory.id group by itemId;", function(err,rows,field) {
-	  if(err) {
-		console.log("Error: ");
-		console.log(err);
-	    } else {
-		res.send(rows);
-	  }
-	});
+    if(err) {
+      console.log("Error: ");
+      console.log(err);
+    } else {
+      res.send(rows);
+    }
+  });
 });
+
 
 // Your other API handlers go here!
 

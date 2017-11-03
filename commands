@@ -10,12 +10,12 @@ SKIP: /user
 /transaction
  - add - Add item to transaction table
    mysql.format("INSERT INTO transaction value(%%, %%)", id);
- - DELETE - Truncate transaction table
+ - void - Truncate transaction table
    TRUNCATE schr1230.transaction
  - GET - List items in transaction table
    select itemId,count(itemId) as count,price, item from transaction,prices,inventory where prices.id=itemId AND itemId=inventory.id group by itemId;
- - delete - Remove item from table (by ID)
-   mysql.prepare("DELETE FROM schr1230.transaction WHERE id = %% LIMIT 1", id);
+ - delete - Remove all items from table (by ID)
+   mysql.prepare("DELETE FROM schr1230.transaction WHERE id = %%", id);
 
 
 What columns does the transaction table need?

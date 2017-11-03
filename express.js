@@ -47,7 +47,17 @@ app.get("/transaction" , function(req,res) {
   });
 });
 
-
+app.delete("/transaction/:itemId", function(req, res){
+  var itemId = req.params.itemId;
+  connection.query(mysql.format("DELETE FROM ??.transaction WHERE itemId = ?", [databaseName, itemId]), function(err, rows, fields){
+    if(err) {
+      console.log("Error: ");
+      console.log(err);
+    } else {
+      res.send('');
+    }
+  });
+});
 // Your other API handlers go here!
 
 app.listen(port);

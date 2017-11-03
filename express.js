@@ -58,6 +58,16 @@ app.delete("/transaction/:itemId", function(req, res){
     }
   });
 });
-// Your other API handlers go here!
 
+app.delete("/transaction" , function(req, res) {
+  connection.query(mysql.format("TRUNCATE ??.transaction", databaseName), function(err,rows,fields) {
+    if(err) {
+      console.log("Error: ");
+      console.log(err);
+    } else {
+      res.send('');
+    }
+ });
+});
+ 
 app.listen(port);

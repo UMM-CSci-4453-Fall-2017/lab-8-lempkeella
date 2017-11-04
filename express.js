@@ -74,8 +74,12 @@ app.post("/transaction/:itemId" , function(req,res) {
   var itemId = req.params.itemId;
   connection.query(mysql.format("INSERT INTO ??.transaction value(?)", [databaseName, itemId]), function(err,rows,field) {
     if(err) {
-      console.log("Error: ");
-      console.log(err);
+      console.log("Error: ?",err);
+      if(err.code == 'ER_NO_REFERENCED_ROW_2'){
+         res.status(400).send('Invalid Item ID');
+      } else {
+         res.sendStatus(500);
+      }
     } else {
       res.send('');
     }

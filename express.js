@@ -25,19 +25,6 @@ app.get("/buttons",function(req,res){
   }})(res));
 });
 
-
-app.get("/click",function(req,res){
-  var id = req.param('id');
-  var sql = 'YOUR SQL HERE'
-  console.log("Attempting sql ->"+sql+"<-");
-
-  connection.query(sql,(function(res){return function(err,rows,fields){
-     if(err){console.log("We have an insertion error:");
-             console.log(err);}
-     res.send(err); // Let upstream know how it went
-  }})(res));
-});
-
 app.get("/transaction" , function(req,res) {
   connection.query("select itemId,count(itemId) as count,price, item from "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
 			" where prices.id=itemId AND itemId=inventory.id group by itemId;", function(err,rows,field) {

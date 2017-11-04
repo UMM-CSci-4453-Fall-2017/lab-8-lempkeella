@@ -70,4 +70,16 @@ app.delete("/transaction" , function(req, res) {
  });
 });
  
+app.post("/transaction/:itemId" , function(req,res) {
+  var itemId = req.params.itemId;
+  connection.query(mysql.format("INSERT INTO ??.transaction value(?)", [databaseName, itemId]), function(err,rows,field) {
+    if(err) {
+      console.log("Error: ");
+      console.log(err);
+    } else {
+      res.send('');
+    }
+  });
+});
+
 app.listen(port);

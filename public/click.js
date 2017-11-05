@@ -5,6 +5,7 @@ angular.module('buttons',[])
 
 function ButtonCtrl($scope,buttonApi){
    $scope.buttons=[]; //Initially all was still
+   $scope.items=[];
    $scope.errorMessage='';
    $scope.isLoading=isLoading;
    $scope.refreshButtons=refreshButtons;
@@ -45,6 +46,10 @@ function buttonApi($http,apiUrl){
       var url = apiUrl + '/buttons';
       return $http.get(url);
     },
+    getItems: function() {
+      var url = apiUrl + '/transaction';
+      return $http.get(url);
+	},
     clickButton: function(id){
       var url = apiUrl+'/click?id='+id;
 //      console.log("Attempting with "+url);

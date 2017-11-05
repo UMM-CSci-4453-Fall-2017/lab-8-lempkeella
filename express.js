@@ -14,7 +14,7 @@ connection.connect(function(err){if(err){console.log(err)}});
 app.use(express.static(__dirname + '/public'));
 
 app.get("/buttons",function(req,res){
-  var sql = mysql.format('SELECT * FROM ??.till_buttons', databaseName);
+  var sql = mysql.format('select buttonID,`left`,top,width,invID,item as label from ??.till_buttons,??.inventory where invID = id', [databaseName,databaseName]);
   connection.query(sql,(function(res){return function(err,rows,fields){
     if(err) {
       console.log("Error: ?", err);

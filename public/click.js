@@ -15,28 +15,29 @@ function ButtonCtrl($scope,buttonApi){
    function isLoading(){
     return loading;
    }
-  function refreshButtons(){
-    loading=true;
-    $scope.errorMessage='';
-    buttonApi.getButtons()
-      .success(function(data){
-         $scope.buttons=data;
-         loading=false;
-      })
-      .error(function () {
-          $scope.errorMessage="Unable to load Buttons:  Database request failed";
-          loading=false;
-      });
- }
-  function buttonClick($event){
-     $scope.errorMessage='';
-     buttonApi.clickButton($event.target.id)
-        .success(function(){})
-        .error(function(){$scope.errorMessage="Unable click";});
-  }
-  refreshButtons();  //make sure the buttons are loaded
+   function refreshButtons(){
+      loading=true;
+      $scope.errorMessage='';
+      buttonApi.getButtons()
+        .success(function(data){
+           $scope.buttons=data;
+           loading=false;
+        })
+        .error(function () {
+            $scope.errorMessage="Unable to load Buttons:  Database request failed";
+            loading=false;
+        });
+   }
 
-}
+   function buttonClick($event){
+      $scope.errorMessage='';
+      buttonApi.clickButton($event.target.id)
+         .success(function(){})
+         .error(function(){$scope.errorMessage="Unable click";});
+   }
+   refreshButtons();  //make sure the buttons are loaded
+
+}  
 
 function buttonApi($http,apiUrl){
   return{

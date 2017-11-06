@@ -46,7 +46,7 @@ function ButtonCtrl($scope,buttonApi){
    function buttonClick($event){
       $scope.errorMessage='';
       buttonApi.clickButton($event.target.id)
-         .success(function(){})
+         .success(refreshItems)
          .error(function(){$scope.errorMessage="Unable click";});
    }
    refreshButtons();  //make sure the buttons are loaded
@@ -65,9 +65,8 @@ function buttonApi($http,apiUrl){
       return $http.get(url);
 	},
     clickButton: function(id){
-      var url = apiUrl+'/click?id='+id;
-//      console.log("Attempting with "+url);
-      return $http.get(url); // Easy enough to do this way
+      var url = apiUrl+'/transaction/' +id;
+      return $http.post(url);
     }
  };
 }

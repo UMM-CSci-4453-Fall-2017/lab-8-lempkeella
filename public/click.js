@@ -52,6 +52,12 @@ function ButtonCtrl($scope,buttonApi){
                loading=false;
            });
    }
+   $scope.deleteItems = function(id){
+      $scope.errorMessage='';
+      buttonApi.deleteItems(id)
+         .success(refreshItems)
+         .error(function(){$scope.errorMessage="Unable to delete item(s)";});
+   }
 
    function buttonClick($event){
       $scope.errorMessage='';
@@ -77,6 +83,10 @@ function buttonApi($http,apiUrl){
     clickButton: function(id){
       var url = apiUrl+'/transaction/' +id;
       return $http.post(url);
+    },
+    deleteItems: function(id){
+      var url = apiUrl + '/transaction/' + id;
+      return $http.delete(url);
     }
  };
 }

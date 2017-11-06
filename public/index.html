@@ -29,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in items">
+      <tr ng-repeat="item in items" ng-click="deleteItems(item.itemId);">
         <td scope="row">{{item.item}}</td>
         <td>{{item.count}}</td>
         <td align="right">${{item.price}}</td>

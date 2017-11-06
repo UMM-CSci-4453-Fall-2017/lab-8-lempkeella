@@ -35,6 +35,11 @@ function ButtonCtrl($scope,buttonApi){
        buttonApi.getItems()
            .success(function(data){
                $scope.items=data;
+               data = data.map(function(item){
+                  item.subtotal = parseFloat(item.price * item.count).toFixed(2);
+                  item.price = parseFloat(item.price).toFixed(2);
+                  return item;
+               });
                loading=false;
            })
            .error(function () {

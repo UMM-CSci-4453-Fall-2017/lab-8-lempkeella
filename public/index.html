@@ -24,6 +24,7 @@
       <tr>
         <th scope="col">Item</th>
         <th >Count</th>
+        <th style="text-align: right;"> Marked Price </th>
         <th style="text-align: right;"> Subtotal </th>
       </tr>
     </thead>
@@ -31,7 +32,8 @@
       <tr ng-repeat="item in items">
         <td scope="row">{{item.item}}</td>
         <td>{{item.count}}</td>
-        <td align="right">${{item.price}} (wrong)</td>
+        <td align="right">${{item.price}}</td>
+        <td align="right">${{item.subtotal}}</td>
       </tr>
     </tbody>
   </table>

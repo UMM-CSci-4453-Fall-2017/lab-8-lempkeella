@@ -7,15 +7,13 @@ port = process.env.PORT || 1337;
 credentials.host='ids.morris.umn.edu'; //setup database credentials
 var databaseName = "schr1230";
 
-var connection = mysql.createConnection(credentials); // setup the connection
-
-connection.connect(function(err){if(err){console.log(err)}});
+connectionPool = mysql.createPool(credentials); // setup the connection
 
 app.use(express.static(__dirname + '/public'));
 
 app.get("/buttons",function(req,res){
   var sql = mysql.format('SELECT buttonID,`left`,top,width,invID,item AS label FROM ??.till_buttons,??.inventory WHERE invID = id', [databaseName,databaseName]);
-  connection.query(sql,(function(res){return function(err,rows,fields){
+  connectionPool.query(sql,(function(res){return function(err,rows,fields){
     if(err) {
       console.log("Error: ?", err);
       res.sendStatus(500);
@@ -26,7 +24,7 @@ app.get("/buttons",function(req,res){
 });
 
 app.get("/transaction" , function(req,res) {
-  connection.query("SELECT itemId,count(itemId) AS count,price, item FROM "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
+  connectionPool.query("SELECT itemId,count(itemId) AS count,price, item FROM "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
 			" WHERE prices.id=itemId AND itemId=inventory.id GROUP BY itemId;", function(err,rows,field) {
     if(err) {
       console.log("Error: ?", err);
@@ -39,7 +37,7 @@ app.get("/transaction" , function(req,res) {
 
 app.delete("/transaction/:itemId", function(req, res){
   var itemId = req.params.itemId;
-  connection.query(mysql.format("DELETE FROM ??.transaction WHERE itemId = ?", [databaseName, itemId]), function(err, rows, fields){
+  connectionPool.query(mysql.format("DELETE FROM ??.transaction WHERE itemId = ?", [databaseName, itemId]), function(err, rows, fields){
     if(err) {
       console.log("Error: ?", err);
       res.sendStatus(500);
@@ -54,7 +52,7 @@ app.delete("/transaction/:itemId", function(req, res){
 });
 
 app.delete("/transaction" , function(req, res) {
-  connection.query(mysql.format("TRUNCATE ??.transaction", databaseName), function(err,rows,fields) {
+  connectionPool.query(mysql.format("TRUNCATE ??.transaction", databaseName), function(err,rows,fields) {
     if(err) {
       console.log("Error: ?", err);
       res.sendStatus(500);
@@ -66,7 +64,7 @@ app.delete("/transaction" , function(req, res) {
  
 app.post("/transaction/:itemId" , function(req,res) {
   var itemId = req.params.itemId;
-  connection.query(mysql.format("INSERT INTO ??.transaction value(?)", [databaseName, itemId]), function(err,rows,field) {
+  connectionPool.query(mysql.format("INSERT INTO ??.transaction value(?)", [databaseName, itemId]), function(err,rows,field) {
     if(err) {
       console.log("Error: ?",err);
       if(err.code == 'ER_NO_REFERENCED_ROW_2'){

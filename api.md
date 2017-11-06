@@ -1,5 +1,4 @@
 # API Documentation
---------------------
 Our API provides endpoints for fetching buttons and manipulating the transaction
 
 ## Buttons

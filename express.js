@@ -14,7 +14,7 @@ connection.connect(function(err){if(err){console.log(err)}});
 app.use(express.static(__dirname + '/public'));
 
 app.get("/buttons",function(req,res){
-  var sql = mysql.format('select buttonID,`left`,top,width,invID,item as label from ??.till_buttons,??.inventory where invID = id', [databaseName,databaseName]);
+  var sql = mysql.format('SELECT buttonID,`left`,top,width,invID,item AS label FROM ??.till_buttons,??.inventory WHERE invID = id', [databaseName,databaseName]);
   connection.query(sql,(function(res){return function(err,rows,fields){
     if(err) {
       console.log("Error: ?", err);
@@ -26,8 +26,8 @@ app.get("/buttons",function(req,res){
 });
 
 app.get("/transaction" , function(req,res) {
-  connection.query("select itemId,count(itemId) as count,price, item from "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
-			" where prices.id=itemId AND itemId=inventory.id group by itemId;", function(err,rows,field) {
+  connection.query("SELECT itemId,count(itemId) AS count,price, item FROM "+databaseName+ ".transaction," +databaseName+ ".prices," +databaseName+ ".inventory"+
+			" WHERE prices.id=itemId AND itemId=inventory.id GROUP BY itemId;", function(err,rows,field) {
     if(err) {
       console.log("Error: ?", err);
       res.sendStatus(500);

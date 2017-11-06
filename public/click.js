@@ -10,6 +10,7 @@ function ButtonCtrl($scope,buttonApi){
    $scope.isLoading=isLoading;
    $scope.refreshButtons=refreshButtons;
    $scope.buttonClick=buttonClick;
+   $scope.totalPrice=0;
 
    var loading = false;
 
@@ -35,11 +36,15 @@ function ButtonCtrl($scope,buttonApi){
        buttonApi.getItems()
            .success(function(data){
                $scope.items=data;
+               $scope.totalPrice=0;
                data = data.map(function(item){
-                  item.subtotal = parseFloat(item.price * item.count).toFixed(2);
+                  var subtotal = item.price * item.count;
+                  item.subtotal = parseFloat(subtotal).toFixed(2);
                   item.price = parseFloat(item.price).toFixed(2);
+                  $scope.totalPrice += subtotal;
                   return item;
                });
+               $scope.totalPrice = parseFloat($scope.totalPrice).toFixed(2);
                loading=false;
            })
            .error(function () {

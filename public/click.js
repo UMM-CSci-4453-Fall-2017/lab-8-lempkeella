@@ -29,6 +29,19 @@ function ButtonCtrl($scope,buttonApi){
             loading=false;
         });
    }
+   function refreshItems(){
+       loading=true;
+       $scope.errorMessage='';
+       buttonApi.getItems()
+           .success(function(data){
+               $scope.items=data;
+               loading=false;
+           })
+           .error(function () {
+               $scope.errorMessage="Unable to load Items:  Database request failed";
+               loading=false;
+           });
+   }
 
    function buttonClick($event){
       $scope.errorMessage='';
@@ -37,6 +50,7 @@ function ButtonCtrl($scope,buttonApi){
          .error(function(){$scope.errorMessage="Unable click";});
    }
    refreshButtons();  //make sure the buttons are loaded
+   refreshItems();
 
 }  
 
